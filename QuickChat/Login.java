@@ -1,3 +1,5 @@
+package QuickChat;
+
 import QuickChat.Login;
 import QuickChat.MessageSender;
 import QuickChat.Message;
