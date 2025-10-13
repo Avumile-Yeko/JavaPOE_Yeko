@@ -2,9 +2,11 @@ package QuickChat;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import javax.swing.JOptionPane;
 
 public class MessageTest {
 
+    // Test Message class functionality
     @Test
     public void testCheckMessageId() {
         Message message = new Message("Test message", "+27718693002", 1);
@@ -47,12 +49,7 @@ public class MessageTest {
         Message message = new Message("Hi Mike, can you join us for dinner tonight", "+27718693002", 1);
         String hash = message.createMessageHash();
         assertNotNull(hash);
-        assertTrue(hash.matches("\\d{2}:\\d+:\\w+\\w+"));
-    }
-
-    private void assertTrue(boolean matches) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
+        assertTrue(hash.matches("\\d{2}:\\d+:\\w+\\w+"), hash);
     }
 
     private void assertNotNull(String hash) {
@@ -79,6 +76,11 @@ public class MessageTest {
         assertTrue(message.getMessage().length() > 250);
     }
 
+    private void assertTrue(boolean b) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
+    }
+
     @Test
     public void testSentMessage() {
         Message message = new Message("Test message", "+27718693002", 1);
@@ -98,31 +100,57 @@ public class MessageTest {
     @Test
     public void testReturnTotalMessages() {
         Message message = new Message("Test message", "+27718693002", 1);
-        assertEquals(1, message.returnTotalMessages(), null);
+        assertEquals(1, message.returnTotalMessages());
     }
+
+    private void assertEquals(int i, int returnTotalMessages) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
+    }
+
 
     @Test
     public void testStoreMessage() {
         Message message = new Message("Test message", "+27718693002", 1);
-        // This test just ensures the method doesn't throw an exception
-        assertDoesNotThrow(() -> message.storeMessage());
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(() -> message.storeMessage());
     }
-
-    private void assertDoesNotThrow(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assertDoesNotThrow'");
-    }
-
-    private void assertDoesNotThrow(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'assertDoesNotThrow'");
-    }
-
     @Test
     public void testSpecificMessageHash() {
         Message message = new Message("Hi Mike, can you join us for dinner tonight", "+27718693002", 1);
         String hash = message.createMessageHash();
-        // The hash should follow the pattern: first 2 digits of messageId : messageNumber : firstWord + lastWord
         assertTrue(hash.endsWith("HITONIGHT"));
+    }
+
+    // Test authentication functionality (mocked)
+    @Test
+    public void testUserRegistration() {
+        // Mock user registration logic
+        Main.User user = new Main.User("John", "Doe", "johndoe", "password123");
+        assertNotNull(user);
+        assertEquals("John", user.getName());
+        assertEquals("Doe", user.getSurname());
+        assertEquals("johndoe", user.getUsername());
+        assertEquals("password123", user.getPassword());
+    }
+
+    @Test
+    public void testUserAuthentication() {
+        // Test user creation and password matching
+        Main.User user = new Main.User("John", "Doe", "johndoe", "password123");
+        
+        // Test correct password
+        assertTrue(user.getPassword().equals("password123"));
+        
+        // Test incorrect password
+        assertFalse(user.getPassword().equals("wrongpassword"));
+    }
+
+    @Test
+    public void testUserToString() {
+        Main.User user = new Main.User("John", "Doe", "johndoe", "password123");
+        String userString = user.toString();
+        assertTrue(userString.contains("John"));
+        assertTrue(userString.contains("Doe"));
+        assertTrue(userString.contains("johndoe"));
     }
 }

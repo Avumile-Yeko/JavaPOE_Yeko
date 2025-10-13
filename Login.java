@@ -1,6 +1,3 @@
-import QuickChat.Login;
-import QuickChat.MessageSender;
-import QuickChat.Message;
 
 import java.util.regex.Pattern;
 

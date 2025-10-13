@@ -94,15 +94,15 @@ public class MessageSender {
         
         if (messageContent == null) return null;
         
-        // Create message object
-        Message message = new Message(messageContent, recipient, messageNumber);
-        
-        // Validate message length
+        // Validate message length before creating message object
         if (messageContent.length() > 250) {
             JOptionPane.showMessageDialog(null, 
-                "Please enter a message of less than 250 characters.");
+                "Message exceeds 250 characters by " + (messageContent.length() - 250) + ", please reduce size.");
             return null;
         }
+        
+        // Create message object
+        Message message = new Message(messageContent, recipient, messageNumber);
         
         return message;
     }
@@ -118,23 +118,26 @@ public class MessageSender {
             options,
             options[0]);
         
+        String result = "";
         switch (choice) {
             case 0: // Send Message
                 messages.add(message);
                 totalMessagesSent++;
                 displayMessageDetails(message);
-                JOptionPane.showMessageDialog(null, "Message successfully sent.");
+                result = "Message successfully sent.";
                 break;
             case 1: // Disregard Message
-                JOptionPane.showMessageDialog(null, "Press 0 to delete message.");
+                result = "Press 0 to delete message.";
                 break;
             case 2: // Store Message
                 message.storeMessage();
-                JOptionPane.showMessageDialog(null, "Message successfully stored.");
+                result = "Message successfully stored.";
                 break;
             default:
-                // Do nothing
+                result = "No action selected.";
         }
+        
+        JOptionPane.showMessageDialog(null, result);
     }
     
     private void displayMessageDetails(Message message) {
