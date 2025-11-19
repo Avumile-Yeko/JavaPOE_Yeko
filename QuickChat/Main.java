@@ -27,6 +27,10 @@ public class Main {
         }
     }
     
+    /**
+     * Handles the authentication flow with registration and login options
+     * @return true if user successfully authenticates, false otherwise
+     */
     private static boolean startAuthenticationFlow() {
         while (true) {
             String[] options = {"Register", "Login", "Exit"};
@@ -56,6 +60,9 @@ public class Main {
         }
     }
     
+    /**
+     * Registers a new user with name, surname, username and password
+     */
     private static void registerUser() {
         JOptionPane.showMessageDialog(null, "User Registration");
         
@@ -81,6 +88,10 @@ public class Main {
         JOptionPane.showMessageDialog(null, "Registration successful! You can now login.");
     }
     
+    /**
+     * Authenticates user with username and password
+     * @return true if login successful, false otherwise
+     */
     private static boolean loginUser() {
         JOptionPane.showMessageDialog(null, "User Login");
         
@@ -101,7 +112,9 @@ public class Main {
         }
     }
     
-    // Inner User class
+    /**
+     * Inner class representing a User with registration details
+     */
     static class User {
         private String name;
         private String surname;

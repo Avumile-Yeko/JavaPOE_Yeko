@@ -8,6 +8,12 @@ public class Message {
     private String messageId;
     private int messageNumber;
     
+    /**
+     * Constructor for creating a new Message
+     * @param message The message content
+     * @param recipient The recipient's phone number
+     * @param messageNumber The sequential message number
+     */
     public Message(String message, String recipient, int messageNumber) {
         this.message = message;
         this.recipient = recipient;
@@ -15,16 +21,28 @@ public class Message {
         this.messageId = generateMessageId();
     }
     
+    /**
+     * Generates a random 10-digit message ID
+     * @return 10-digit message ID as String
+     */
     private String generateMessageId() {
         Random random = new Random();
         long id = 1000000000L + random.nextInt(900000000);
         return String.valueOf(id);
     }
     
+    /**
+     * Validates that the message ID is exactly 10 characters
+     * @return true if valid, false otherwise
+     */
     public boolean checkMessageId() {
         return messageId != null && messageId.length() == 10;
     }
     
+    /**
+     * Validates recipient cell number format
+     * @return 1 if valid, -1 if invalid
+     */
     public int checkRecipientCell() {
         if (recipient == null || recipient.trim().isEmpty()) {
             return -1; // Invalid: empty recipient
@@ -49,31 +67,44 @@ public class Message {
         return -1; // Invalid format
     }
     
-    // Overloaded method for boolean return (as specified in requirements)
+    /**
+     * Returns true if recipient cell is valid, false otherwise
+     * @return true if recipient cell is valid, false otherwise
+     */
     public boolean isRecipientCellValid() {
         return checkRecipientCell() == 1;
     }
     
+    /**
+     * Creates a message hash in format: first2DigitsOfID:messageNumber:firstWordLastWord
+     * @return formatted message hash in uppercase
+     */
     public String createMessageHash() {
         if (message == null || message.isEmpty()) {
             return "00:0:EMPTY";
         }
         
         String[] words = message.split("\\s+");
-        String firstWord = words.length > 0 ? words[0] : "";
-        String lastWord = words.length > 0 ? words[words.length - 1] : "";
+        String firstWord = words.length > 0 ? words[0].replaceAll("[^a-zA-Z]", "") : "";
+        String lastWord = words.length > 0 ? words[words.length - 1].replaceAll("[^a-zA-Z]", "") : "";
         
         String messageIdPrefix = messageId.length() >= 2 ? messageId.substring(0, 2) : "00";
         
         return (messageIdPrefix + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
     
+    /**
+     * Returns message ready status
+     * @return "Message ready to send."
+     */
     public String sentMessage() {
-        // This method would handle the actual sending logic
-        // For now, we'll return a success message
         return "Message ready to send.";
     }
     
+    /**
+     * Formats message details for display
+     * @return formatted string with message details
+     */
     public String printMessages() {
         return "Message ID: " + messageId + "\n" +
                "Recipient: " + recipient + "\n" +
@@ -81,10 +112,17 @@ public class Message {
                "Hash: " + createMessageHash();
     }
     
+    /**
+     * Returns total messages count (always 1 for single message)
+     * @return 1
+     */
     public int returnTotalMessages() {
-        return 1; // This would normally track total messages, but for single message returns 1
+        return 1;
     }
     
+    /**
+     * Stores message as JSON format (simulated)
+     */
     public void storeMessage() {
         // Simple JSON storage simulation
         String json = String.format(
@@ -97,19 +135,8 @@ public class Message {
     }
     
     // Getters
-    public String getMessage() {
-        return message;
-    }
-    
-    public String getRecipient() {
-        return recipient;
-    }
-    
-    public String getMessageId() {
-        return messageId;
-    }
-    
-    public int getMessageNumber() {
-        return messageNumber;
-    }
+    public String getMessage() { return message; }
+    public String getRecipient() { return recipient; }
+    public String getMessageId() { return messageId; }
+    public int getMessageNumber() { return messageNumber; }
 }
